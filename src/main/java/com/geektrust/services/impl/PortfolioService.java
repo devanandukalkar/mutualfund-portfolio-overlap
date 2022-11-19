@@ -62,13 +62,16 @@ public class PortfolioService implements IPortfolioService {
             int commonStocksCount = findNumberOfCommandStocks(stocksInFirstFund, stocksInSecondFund);
 
             int stocksCountInSecondFund = stocksInSecondFund.size();
-            double overlapPercentage = fundOverlap.applyFundOverlapFormula(stocksCountInFirstFund, commonStocksCount, stocksCountInSecondFund);
-
-            // Ignore zero overlapped funds
-            if (overlapPercentage == ApplicationConstants.ZERO_OVERLAP) continue;
 
             fundOverlap.setFundToCompare(fundToCompare);
             fundOverlap.setFundInPortfolio(fundInPortfolio);
+            fundOverlap.setStocksCountForFundToCompare(stocksCountInFirstFund);
+            fundOverlap.setStocksCountForFundInPortfolio(stocksCountInSecondFund);
+
+            double overlapPercentage = fundOverlap.applyFundOverlapFormula(commonStocksCount);
+            // Ignore zero overlapped funds
+            if (overlapPercentage == ApplicationConstants.ZERO_OVERLAP) continue;
+
             fundOverlap.setFundOverlapPercentage(overlapPercentage);
             overlapList.add(fundOverlap);
         }

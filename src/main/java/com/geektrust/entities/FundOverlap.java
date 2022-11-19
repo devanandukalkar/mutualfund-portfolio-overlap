@@ -6,7 +6,9 @@ import java.math.RoundingMode;
 public class FundOverlap {
     
     private String fundToCompare;
+    private Integer stocksCountForFundToCompare;
     private String fundInPortfolio;
+    private Integer stocksCountForFundInPortfolio;
     private Double fundOverlapPercentage;
 
     public String getFundToCompare() {
@@ -33,10 +35,18 @@ public class FundOverlap {
         this.fundOverlapPercentage = fundOverlapPercentage;
     }
 
-    public double applyFundOverlapFormula(int stocksCountInFirstFund, int commonStocksCount, int stocksCountInSecondFund) {
+    public void setStocksCountForFundToCompare(Integer stocksCountForFundToCompare) {
+        this.stocksCountForFundToCompare = stocksCountForFundToCompare;
+    }
+
+    public void setStocksCountForFundInPortfolio(Integer stocksCountForFundInPortfolio) {
+        this.stocksCountForFundInPortfolio = stocksCountForFundInPortfolio;
+    }
+
+    public double applyFundOverlapFormula(int commonStocksCount) {
         // Formula
         // Overlap (A,B) = 2*(No of common stocks in A & B)/ (No of stocks in A + No of stocks in B) * 100
-        double calculatedOverlap = ((double) (2 * commonStocksCount) / (double) (stocksCountInFirstFund + stocksCountInSecondFund)) * 100;
+        double calculatedOverlap = ((double) (2 * commonStocksCount) / (double) (this.stocksCountForFundToCompare + this.stocksCountForFundInPortfolio)) * 100;
         return roundOffOverlapValue(calculatedOverlap);
     }
 
